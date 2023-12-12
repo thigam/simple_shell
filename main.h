@@ -9,7 +9,15 @@
 #include <unistd.h>
 #include <string.h>
 
+typedef int (*funcptr)(char *);
+
+struct functions {
+    char *func_name;
+    funcptr func;
+} typedef functions_t;
+
 void path_handler(char *input);
+int switcher(char *command);
+int exit_shell (char *);
 
 #endif // MAIN
-

@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 int main(int ac, char **av, char **env)
 {
     char *input = NULL;
@@ -9,11 +10,20 @@ int main(int ac, char **av, char **env)
     size_t length = 0;
     int i = 0;
     char *word;
-    char **argv;
+    char **argv = NULL;
+
+
 
     while (1)
     {
         printf("#cisfun$ ");
+
+        if (input != NULL)
+            free(input);
+        input = malloc(100);
+
+        if (input == NULL)
+            printf("#cisfun$ ");
 
         if (getline(&input, &length, stdin) == -1)
             perror("Error:");
@@ -25,7 +35,26 @@ int main(int ac, char **av, char **env)
 
         word = strtok(input, " ");
 
+        i = 0;
+
+        if (argv != NULL)
+        {
+            for (i = 0; argv[i] != NULL; i++)
+            {
+                free(argv[i]);
+            }
+            free(argv);
+        }
+
         argv = malloc(sizeof(char *) * strlen(input) + 1);
+        if (argv == NULL)
+        {
+            printf("malloc fails");
+            exit(1);
+        }
+
+        i = 0;
+
         while (word != NULL)
         {
             argv[i] = malloc(strlen(word) + 1);
@@ -41,7 +70,6 @@ int main(int ac, char **av, char **env)
 
         if (stat(argv[0], &st) == 0)
         {
-
             child_pid = fork();
 
             if (child_pid == -1)
@@ -57,16 +85,19 @@ int main(int ac, char **av, char **env)
             }
             else
             {
-                wait(&status);
+                if (wait(&status) == -1)
+                    perror("Wait failed:");
             }
         }
+        else if (switcher(argv[0]) == 1)
+            return (0);
         else
         {
             printf("./shell: No such file or directory\n");
+
         }
 
     }
 
     return 0;
 }
-

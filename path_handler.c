@@ -2,7 +2,7 @@
 
 void path_handler(char *input)
 {
-    char holder[70];
+    char holder[10];
     char standard[70] = "/bin/";
     int i = 0;
     while (i < 5)
