@@ -20,6 +20,8 @@ void path_handler(char *input);
 int switcher(char *command);
 int exit_shell (char *);
 int (*get_builtin(char *cmd))(data_shell *);
-void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);;
+void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
+int cd_shell(data_shell *datash);
+
 
 #endif
