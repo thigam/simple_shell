@@ -2,5 +2,9 @@
 
 int exit_shell (char *command)
 {
-	exit(0);
+	if (command != NULL)
+	{
+		exit (0);
+	}
+	return (1);
 }

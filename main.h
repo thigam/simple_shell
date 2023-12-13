@@ -11,13 +11,13 @@
 
 typedef int (*funcptr)(char *);
 
-struct functions {
+typedef struct functions {
     char *func_name;
     funcptr func;
-} typedef functions_t;
+} functions_t;
 
 void path_handler(char *input);
 int switcher(char *command);
 int exit_shell (char *);
 
-#endif // MAIN
+#endif

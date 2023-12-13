@@ -12,7 +12,8 @@ int main(int ac, char **av, char **env)
     char *word;
     char **argv = NULL;
 
-
+	if (ac == 0 || av == NULL)
+		printf("Chill");
 
     while (1)
     {
