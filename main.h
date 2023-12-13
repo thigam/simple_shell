@@ -19,5 +19,6 @@ typedef struct functions {
 void path_handler(char *input);
 int switcher(char *command);
 int exit_shell (char *);
+int (*get_builtin(char *cmd))(data_shell *);
 
 #endif
