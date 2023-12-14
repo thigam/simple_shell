@@ -10,7 +10,7 @@ int switcher(char *command)
 
     for (i = 0; funcs[i].func_name; i++)
     {
-        if (strcmp(funcs[i].func_name, command) == 0)
+        if (_strcmp(funcs[i].func_name, command) == 0)
         {
             return (funcs[i].func(command));
             break;

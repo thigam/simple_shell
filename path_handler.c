@@ -12,11 +12,11 @@ void path_handler(char *input)
     }
     holder[i] = '\0';
 
-    if (strcmp(standard, holder) == 0)
+    if (_strcmp(standard, holder) == 0) 
         return;
     else
     {
-        strcat(standard, input);
-        strcpy(input, standard);
+        _strcat(standard, input);
+        _strcpy(input, standard); 
     }
 }

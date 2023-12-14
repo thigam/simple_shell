@@ -12,25 +12,23 @@ int main(int ac, char **av, char **env)
     char *word;
     char **argv = NULL;
 
-	if (ac == 0 || av == NULL)
-		printf("Chill");
+        if (ac == 0 && av == NULL) 
+                write(1, "Chill", 5); 
 
     while (1)
     {
-        printf("#cisfun$ ");
+        write(1, "#cisfun$ ", 9);
 
-        if (input != NULL)
-            free(input);
         input = malloc(100);
 
         if (input == NULL)
-            printf("#cisfun$ ");
+            write(1, "malloc fails for input", 22); 
 
         if (getline(&input, &length, stdin) == -1)
             perror("Error:");
 
-        if (input[strlen(input) - 1] == '\n')
-            input[strlen(input) - 1] = '\0';
+        if (input[_strlen(input) - 1] == '\n') 
+            input[_strlen(input) - 1] = '\0'; 
 
         path_handler(input);
 
@@ -38,19 +36,10 @@ int main(int ac, char **av, char **env)
 
         i = 0;
 
-        if (argv != NULL)
-        {
-            for (i = 0; argv[i] != NULL; i++)
-            {
-                free(argv[i]);
-            }
-            free(argv);
-        }
-
-        argv = malloc(sizeof(char *) * strlen(input) + 1);
+        argv = malloc(sizeof(char *) * 20); 
         if (argv == NULL)
         {
-            printf("malloc fails");
+            write(1, "malloc fails for argv", 21); 
             exit(1);
         }
 
@@ -60,9 +49,9 @@ int main(int ac, char **av, char **env)
         {
             argv[i] = malloc(strlen(word) + 1);
             if (argv[i] == NULL)
-                printf("Didn't allocate space in array");
+                write(1, "Didn't allocate space in array", 30);
 
-            strcpy(argv[i], word);
+            _strcpy(argv[i], word);
             i++;
             word = strtok(NULL, " ");
         }
@@ -71,13 +60,14 @@ int main(int ac, char **av, char **env)
 
         if (stat(argv[0], &st) == 0)
         {
-            child_pid = fork();
-
             if (child_pid == -1)
             {
                 perror("Error");
                 return (1);
             }
+
+            if (child_pid != 0)
+                child_pid = fork();
 
             if (child_pid == 0)
             {
@@ -91,12 +81,35 @@ int main(int ac, char **av, char **env)
             }
         }
         else if (switcher(argv[0]) == 1)
-            return (0);
+            {
+                if (input != NULL)
+                    free(input); 
+                if (argv != NULL)
+                {
+                    for (i = 0; argv[i] != NULL; i++)
+                    {
+                        free(argv[i]);
+                    }
+                    free(argv);
+                } 
+                return (0);
+            }
         else
         {
-            printf("./shell: No such file or directory\n");
+            write(1, "./shell: No such file or directory\n", 35);
 
         }
+
+        if (input != NULL)
+            free(input);
+        if (argv != NULL)
+        {
+            for (i = 0; argv[i] != NULL; i++)
+            {
+                free(argv[i]);
+            }
+            free(argv);
+        } 
 
     }
 
