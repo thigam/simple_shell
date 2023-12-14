@@ -19,17 +19,8 @@ int main(int ac, char **av, char **env)
     {
         write(1, "#cisfun$ ", 9);
 
-        input = malloc(100);
-
-        if (input == NULL)
-	{
-	       write(1, "malloc fails for input", 22);
-	       return (1);
-	}
-
         if (getline(&input, &length, stdin) == -1)
            {
-                   free(input);
                    break;
            }
 
@@ -46,7 +37,6 @@ int main(int ac, char **av, char **env)
         if (argv == NULL)
         {
             write(1, "malloc fails for argv", 21);
-            free(input);
             exit(1);
         }
 
@@ -58,7 +48,6 @@ int main(int ac, char **av, char **env)
             if (argv[i] == NULL)
             {
                 write(1, "Didn't allocate space in array", 30);
-                free_string(input);
                 free_array(argv);
                 return (1);
             }
@@ -75,7 +64,6 @@ int main(int ac, char **av, char **env)
             if (child_pid == -1)
             {
                 perror("Error");
-                free_string(input);
                 return (1);
             }
 
@@ -95,7 +83,6 @@ int main(int ac, char **av, char **env)
         }
         else if (switcher(argv[0]) == 1)
             {
-                free(input);
                 free_array(argv);
                 return (0);
             }
@@ -104,7 +91,6 @@ int main(int ac, char **av, char **env)
             write(1, "./shell: No such file or directory\n", 35);
         }
 
-        free_string(input);
         free_array(argv);
 
     }
