@@ -23,6 +23,8 @@ void _strcpy(char *dest, char *source);
 void _strcat(char *dest, char *source);
 int _strcmp(char *a, char *b);
 int _strlen(char *a);
+void free_string(char *a);
+void free_array(char **a);
 
 
 #endif

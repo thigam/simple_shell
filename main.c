@@ -5,15 +5,15 @@ int main(int ac, char **av, char **env)
 {
     char *input = NULL;
     struct stat st;
-    pid_t child_pid;
-    int status;
+    pid_t child_pid = 5;
+    int status = 0;
     size_t length = 0;
     int i = 0;
     char *word;
     char **argv = NULL;
 
-        if (ac == 0 && av == NULL) 
-                write(1, "Chill", 5); 
+        if (ac == 0 && av == NULL)
+                write(1, "Chill", 5);
 
     while (1)
     {
@@ -22,17 +22,19 @@ int main(int ac, char **av, char **env)
         input = malloc(100);
 
         if (input == NULL)
-            write(1, "malloc fails for input", 22); 
+	{
+	       write(1, "malloc fails for input", 22);
+	       return (1);
+	}
 
         if (getline(&input, &length, stdin) == -1)
            {
-		   if (input != NULL)
-			   free(input);
-		   break;
-	   }
+                   free(input);
+                   break;
+           }
 
-        if (input[_strlen(input) - 1] == '\n') 
-            input[_strlen(input) - 1] = '\0'; 
+        if (input[_strlen(input) - 1] == '\n')
+            input[_strlen(input) - 1] = '\0';
 
         path_handler(input);
 
@@ -40,10 +42,11 @@ int main(int ac, char **av, char **env)
 
         i = 0;
 
-        argv = malloc(sizeof(char *) * 20); 
+        argv = malloc(sizeof(char *) * 20);
         if (argv == NULL)
         {
-            write(1, "malloc fails for argv", 21); 
+            write(1, "malloc fails for argv", 21);
+            free(input);
             exit(1);
         }
 
@@ -53,7 +56,12 @@ int main(int ac, char **av, char **env)
         {
             argv[i] = malloc(strlen(word) + 1);
             if (argv[i] == NULL)
+            {
                 write(1, "Didn't allocate space in array", 30);
+                free_string(input);
+                free_array(argv);
+                return (1);
+            }
 
             _strcpy(argv[i], word);
             i++;
@@ -67,6 +75,7 @@ int main(int ac, char **av, char **env)
             if (child_pid == -1)
             {
                 perror("Error");
+                free_string(input);
                 return (1);
             }
 
@@ -86,34 +95,17 @@ int main(int ac, char **av, char **env)
         }
         else if (switcher(argv[0]) == 1)
             {
-                if (input != NULL)
-                    free(input); 
-                if (argv != NULL)
-                {
-                    for (i = 0; argv[i] != NULL; i++)
-                    {
-                        free(argv[i]);
-                    }
-                    free(argv);
-                } 
+                free(input);
+                free_array(argv);
                 return (0);
             }
         else
         {
             write(1, "./shell: No such file or directory\n", 35);
-
         }
 
-        if (input != NULL)
-            free(input);
-        if (argv != NULL)
-        {
-            for (i = 0; argv[i] != NULL; i++)
-            {
-                free(argv[i]);
-            }
-            free(argv);
-        } 
+        free_string(input);
+        free_array(argv);
 
     }
 
