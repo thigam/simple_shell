@@ -25,7 +25,11 @@ int main(int ac, char **av, char **env)
             write(1, "malloc fails for input", 22); 
 
         if (getline(&input, &length, stdin) == -1)
-            perror("Error:");
+           {
+		   if (input != NULL)
+			   free(input);
+		   break;
+	   }
 
         if (input[_strlen(input) - 1] == '\n') 
             input[_strlen(input) - 1] = '\0'; 
