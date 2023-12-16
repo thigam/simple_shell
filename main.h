@@ -49,19 +49,11 @@ typedef struct functions {
 void path_handler(char *input);
 int switcher(char *command);
 int exit_shell (char *);
+<<<<<<< HEAD
 int (*get_builtin(char *cmd))(data_shell *);
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 int cd_shell(data_shell *datash);
-/* split.c */
-char *swap_char(char *input, int bool);
-void add_nodes(sep_list **head_s, line_list **head_l, char *input);
-void go_next(sep_list **list_s, line_list **list_l, data_shell *datash);
-int split_commands(data_shell *datash, char *input);
-char **split_line(char *input);
-/*env.c*/
-int cmp_env_name(const char *nenv, const char *name);
-char *_getenv(const char *name, char **_environ);
-int _env(data_shell *datash);
+
 
 
 #endif
