@@ -57,5 +57,10 @@ int cd_shell(data_shell *datash);
 int cmp_env_name(const char *nenv, const char *name);
 char *_getenv(const char *name, char **_environ);
 int _env(data_shell *datash);
+/*shell_env.c*/
+char *copy_info(char *name, char *value);
+void set_env(char *name, char *value, data_shell *datash);
+int _setenv(data_shell *datash);
+int _unsetenv(data_shell *datash);
 
 #endif
