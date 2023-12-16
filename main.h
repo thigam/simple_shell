@@ -53,7 +53,9 @@ int exit_shell (char *);
 int (*get_builtin(char *cmd))(data_shell *);
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 int cd_shell(data_shell *datash);
-
-
+/*env.c*/
+int cmp_env_name(const char *nenv, const char *name);
+char *_getenv(const char *name, char **_environ);
+int _env(data_shell *datash);
 
 #endif
