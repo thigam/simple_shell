@@ -8,6 +8,36 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <string.h>
+#include <limits.h>
+
+#define BUFSIZE 1024
+
+/**
+ * struct data - struct that contains all relevant data on runtime
+ * @av: argument vector
+ * @input: command line written by the user
+ * @args: tokens of the command line
+ * @status: last status of the shell
+ * @counter: lines counter
+ * @_environ: environment variable
+ * @pid: process ID of the shell
+ */
+typedef struct data
+{
+	char **av;
+	char *input;
+	char **args;
+	int status;
+	int counter;
+	char **_environ;
+	char *pid;
+} data_shell;
+
+typedef struct builtin_s
+{
+	char *name;
+	int (*f)(data_shell *datash);
+} builtin_t;
 
 typedef int (*funcptr)(char *);
 
@@ -22,6 +52,12 @@ int exit_shell (char *);
 int (*get_builtin(char *cmd))(data_shell *);
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 int cd_shell(data_shell *datash);
+/* split.c */
+char *swap_char(char *input, int bool);
+void add_nodes(sep_list **head_s, line_list **head_l, char *input);
+void go_next(sep_list **list_s, line_list **list_l, data_shell *datash);
+int split_commands(data_shell *datash, char *input);
+char **split_line(char *input);
 
 
 #endif
