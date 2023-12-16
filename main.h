@@ -58,6 +58,10 @@ void add_nodes(sep_list **head_s, line_list **head_l, char *input);
 void go_next(sep_list **list_s, line_list **list_l, data_shell *datash);
 int split_commands(data_shell *datash, char *input);
 char **split_line(char *input);
+/*env.c*/
+int cmp_env_name(const char *nenv, const char *name);
+char *_getenv(const char *name, char **_environ);
+int _env(data_shell *datash);
 
 
 #endif
